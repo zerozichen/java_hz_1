@@ -28,6 +28,7 @@ public class Mbg_GeneratorUtil
 	{
 		try 
 		{
+			System.out.println("sdfdsaf");
 			new Mbg_GeneratorUtil().generator();
 		} catch (Exception e) {
 			e.printStackTrace();
