@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.ssm.dao.CustomerMapper">
+  <resultMap id="BaseResultMap" type="com.xl.ssm.pojo.Customer">
+    <id column="CUSTOMER_ID" jdbcType="VARCHAR" property="customerId" />
+    <result column="COMPANY_NAME" jdbcType="VARCHAR" property="companyName" />
+    <result column="CUSTOMER_LEVEL" jdbcType="DECIMAL" property="customerLevel" />
+    <result column="LINKMAN_ID" jdbcType="VARCHAR" property="linkmanId" />
+    <result column="CUSTOMER_ADDRESS" jdbcType="VARCHAR" property="customerAddress" />
+    <result column="CUSTOMER_TEL_NO" jdbcType="DECIMAL" property="customerTelNo" />
+    <result column="CUSTOMER_FAX" jdbcType="DECIMAL" property="customerFax" />
+    <result column="CUSTOMER_EMAIL" jdbcType="VARCHAR" property="customerEmail" />
+    <result column="CUSTOMER_WEBSITE" jdbcType="VARCHAR" property="customerWebsite" />
+    <result column="CUSTOMER_BAN" jdbcType="VARCHAR" property="customerBan" />
+    <result column="CUSTOMER_BANK_ACCOUNT" jdbcType="DECIMAL" property="customerBankAccount" />
+    <result column="CUSTOMER_SATISFY" jdbcType="DECIMAL" property="customerSatisfy" />
+    <result column="CUSTOMER_CREDIT" jdbcType="DECIMAL" property="customerCredit" />
+    <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus" />
+    <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CUSTOMER_ID, COMPANY_NAME, CUSTOMER_LEVEL, LINKMAN_ID, CUSTOMER_ADDRESS, CUSTOMER_TEL_NO, 
+    CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_WEBSITE, CUSTOMER_BAN, CUSTOMER_BANK_ACCOUNT, 
+    CUSTOMER_SATISFY, CUSTOMER_CREDIT, CUSTOMER_STATUS, CUSTOMER_TYPE
+  </sql>
+  <select id="selectByExample" parameterType="com.xl.ssm.pojo.CustomerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CUSTOMER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CUSTOMER
+    where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CUSTOMER
+    where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xl.ssm.pojo.CustomerExample">
+    delete from CUSTOMER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xl.ssm.pojo.Customer">
+    insert into CUSTOMER (CUSTOMER_ID, COMPANY_NAME, CUSTOMER_LEVEL, 
+      LINKMAN_ID, CUSTOMER_ADDRESS, CUSTOMER_TEL_NO, 
+      CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_WEBSITE, 
+      CUSTOMER_BAN, CUSTOMER_BANK_ACCOUNT, CUSTOMER_SATISFY, 
+      CUSTOMER_CREDIT, CUSTOMER_STATUS, CUSTOMER_TYPE
+      )
+    values (#{customerId,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{customerLevel,jdbcType=DECIMAL}, 
+      #{linkmanId,jdbcType=VARCHAR}, #{customerAddress,jdbcType=VARCHAR}, #{customerTelNo,jdbcType=DECIMAL}, 
+      #{customerFax,jdbcType=DECIMAL}, #{customerEmail,jdbcType=VARCHAR}, #{customerWebsite,jdbcType=VARCHAR}, 
+      #{customerBan,jdbcType=VARCHAR}, #{customerBankAccount,jdbcType=DECIMAL}, #{customerSatisfy,jdbcType=DECIMAL}, 
+      #{customerCredit,jdbcType=DECIMAL}, #{customerStatus,jdbcType=DECIMAL}, #{customerType,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xl.ssm.pojo.Customer">
+    insert into CUSTOMER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="customerId != null">
+        CUSTOMER_ID,
+      </if>
+      <if test="companyName != null">
+        COMPANY_NAME,
+      </if>
+      <if test="customerLevel != null">
+        CUSTOMER_LEVEL,
+      </if>
+      <if test="linkmanId != null">
+        LINKMAN_ID,
+      </if>
+      <if test="customerAddress != null">
+        CUSTOMER_ADDRESS,
+      </if>
+      <if test="customerTelNo != null">
+        CUSTOMER_TEL_NO,
+      </if>
+      <if test="customerFax != null">
+        CUSTOMER_FAX,
+      </if>
+      <if test="customerEmail != null">
+        CUSTOMER_EMAIL,
+      </if>
+      <if test="customerWebsite != null">
+        CUSTOMER_WEBSITE,
+      </if>
+      <if test="customerBan != null">
+        CUSTOMER_BAN,
+      </if>
+      <if test="customerBankAccount != null">
+        CUSTOMER_BANK_ACCOUNT,
+      </if>
+      <if test="customerSatisfy != null">
+        CUSTOMER_SATISFY,
+      </if>
+      <if test="customerCredit != null">
+        CUSTOMER_CREDIT,
+      </if>
+      <if test="customerStatus != null">
+        CUSTOMER_STATUS,
+      </if>
+      <if test="customerType != null">
+        CUSTOMER_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="customerId != null">
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerLevel != null">
+        #{customerLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="linkmanId != null">
+        #{linkmanId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null">
+        #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTelNo != null">
+        #{customerTelNo,jdbcType=DECIMAL},
+      </if>
+      <if test="customerFax != null">
+        #{customerFax,jdbcType=DECIMAL},
+      </if>
+      <if test="customerEmail != null">
+        #{customerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="customerWebsite != null">
+        #{customerWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBan != null">
+        #{customerBan,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBankAccount != null">
+        #{customerBankAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="customerSatisfy != null">
+        #{customerSatisfy,jdbcType=DECIMAL},
+      </if>
+      <if test="customerCredit != null">
+        #{customerCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="customerStatus != null">
+        #{customerStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="customerType != null">
+        #{customerType,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xl.ssm.pojo.CustomerExample" resultType="java.lang.Integer">
+    select count(*) from CUSTOMER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CUSTOMER
+    <set>
+      <if test="record.customerId != null">
+        CUSTOMER_ID = #{record.customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null">
+        COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerLevel != null">
+        CUSTOMER_LEVEL = #{record.customerLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.linkmanId != null">
+        LINKMAN_ID = #{record.linkmanId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerAddress != null">
+        CUSTOMER_ADDRESS = #{record.customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerTelNo != null">
+        CUSTOMER_TEL_NO = #{record.customerTelNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerFax != null">
+        CUSTOMER_FAX = #{record.customerFax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerEmail != null">
+        CUSTOMER_EMAIL = #{record.customerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerWebsite != null">
+        CUSTOMER_WEBSITE = #{record.customerWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBan != null">
+        CUSTOMER_BAN = #{record.customerBan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBankAccount != null">
+        CUSTOMER_BANK_ACCOUNT = #{record.customerBankAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerSatisfy != null">
+        CUSTOMER_SATISFY = #{record.customerSatisfy,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerCredit != null">
+        CUSTOMER_CREDIT = #{record.customerCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerStatus != null">
+        CUSTOMER_STATUS = #{record.customerStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerType != null">
+        CUSTOMER_TYPE = #{record.customerType,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CUSTOMER
+    set CUSTOMER_ID = #{record.customerId,jdbcType=VARCHAR},
+      COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      CUSTOMER_LEVEL = #{record.customerLevel,jdbcType=DECIMAL},
+      LINKMAN_ID = #{record.linkmanId,jdbcType=VARCHAR},
+      CUSTOMER_ADDRESS = #{record.customerAddress,jdbcType=VARCHAR},
+      CUSTOMER_TEL_NO = #{record.customerTelNo,jdbcType=DECIMAL},
+      CUSTOMER_FAX = #{record.customerFax,jdbcType=DECIMAL},
+      CUSTOMER_EMAIL = #{record.customerEmail,jdbcType=VARCHAR},
+      CUSTOMER_WEBSITE = #{record.customerWebsite,jdbcType=VARCHAR},
+      CUSTOMER_BAN = #{record.customerBan,jdbcType=VARCHAR},
+      CUSTOMER_BANK_ACCOUNT = #{record.customerBankAccount,jdbcType=DECIMAL},
+      CUSTOMER_SATISFY = #{record.customerSatisfy,jdbcType=DECIMAL},
+      CUSTOMER_CREDIT = #{record.customerCredit,jdbcType=DECIMAL},
+      CUSTOMER_STATUS = #{record.customerStatus,jdbcType=DECIMAL},
+      CUSTOMER_TYPE = #{record.customerType,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xl.ssm.pojo.Customer">
+    update CUSTOMER
+    <set>
+      <if test="companyName != null">
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerLevel != null">
+        CUSTOMER_LEVEL = #{customerLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="linkmanId != null">
+        LINKMAN_ID = #{linkmanId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null">
+        CUSTOMER_ADDRESS = #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTelNo != null">
+        CUSTOMER_TEL_NO = #{customerTelNo,jdbcType=DECIMAL},
+      </if>
+      <if test="customerFax != null">
+        CUSTOMER_FAX = #{customerFax,jdbcType=DECIMAL},
+      </if>
+      <if test="customerEmail != null">
+        CUSTOMER_EMAIL = #{customerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="customerWebsite != null">
+        CUSTOMER_WEBSITE = #{customerWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBan != null">
+        CUSTOMER_BAN = #{customerBan,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBankAccount != null">
+        CUSTOMER_BANK_ACCOUNT = #{customerBankAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="customerSatisfy != null">
+        CUSTOMER_SATISFY = #{customerSatisfy,jdbcType=DECIMAL},
+      </if>
+      <if test="customerCredit != null">
+        CUSTOMER_CREDIT = #{customerCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="customerStatus != null">
+        CUSTOMER_STATUS = #{customerStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="customerType != null">
+        CUSTOMER_TYPE = #{customerType,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xl.ssm.pojo.Customer">
+    update CUSTOMER
+    set COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      CUSTOMER_LEVEL = #{customerLevel,jdbcType=DECIMAL},
+      LINKMAN_ID = #{linkmanId,jdbcType=VARCHAR},
+      CUSTOMER_ADDRESS = #{customerAddress,jdbcType=VARCHAR},
+      CUSTOMER_TEL_NO = #{customerTelNo,jdbcType=DECIMAL},
+      CUSTOMER_FAX = #{customerFax,jdbcType=DECIMAL},
+      CUSTOMER_EMAIL = #{customerEmail,jdbcType=VARCHAR},
+      CUSTOMER_WEBSITE = #{customerWebsite,jdbcType=VARCHAR},
+      CUSTOMER_BAN = #{customerBan,jdbcType=VARCHAR},
+      CUSTOMER_BANK_ACCOUNT = #{customerBankAccount,jdbcType=DECIMAL},
+      CUSTOMER_SATISFY = #{customerSatisfy,jdbcType=DECIMAL},
+      CUSTOMER_CREDIT = #{customerCredit,jdbcType=DECIMAL},
+      CUSTOMER_STATUS = #{customerStatus,jdbcType=DECIMAL},
+      CUSTOMER_TYPE = #{customerType,jdbcType=DECIMAL}
+    where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.xl.ssm.pojo.Customer">
+    <id column="CUSTOMER_ID" jdbcType="VARCHAR" property="customerId" />
+    <result column="COMPANY_NAME" jdbcType="VARCHAR" property="companyName" />
+    <result column="CUSTOMER_LEVEL" jdbcType="DECIMAL" property="customerLevel" />
+    <result column="LINKMAN_ID" jdbcType="VARCHAR" property="linkmanId" />
+    <result column="CUSTOMER_ADDRESS" jdbcType="VARCHAR" property="customerAddress" />
+    <result column="CUSTOMER_TEL_NO" jdbcType="DECIMAL" property="customerTelNo" />
+    <result column="CUSTOMER_FAX" jdbcType="DECIMAL" property="customerFax" />
+    <result column="CUSTOMER_EMAIL" jdbcType="VARCHAR" property="customerEmail" />
+    <result column="CUSTOMER_WEBSITE" jdbcType="VARCHAR" property="customerWebsite" />
+    <result column="CUSTOMER_BAN" jdbcType="VARCHAR" property="customerBan" />
+    <result column="CUSTOMER_BANK_ACCOUNT" jdbcType="DECIMAL" property="customerBankAccount" />
+    <result column="CUSTOMER_SATISFY" jdbcType="DECIMAL" property="customerSatisfy" />
+    <result column="CUSTOMER_CREDIT" jdbcType="DECIMAL" property="customerCredit" />
+    <result column="CUSTOMER_STATUS" jdbcType="DECIMAL" property="customerStatus" />
+    <result column="CUSTOMER_TYPE" jdbcType="DECIMAL" property="customerType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CUSTOMER_ID, COMPANY_NAME, CUSTOMER_LEVEL, LINKMAN_ID, CUSTOMER_ADDRESS, CUSTOMER_TEL_NO, 
+    CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_WEBSITE, CUSTOMER_BAN, CUSTOMER_BANK_ACCOUNT, 
+    CUSTOMER_SATISFY, CUSTOMER_CREDIT, CUSTOMER_STATUS, CUSTOMER_TYPE
+  </sql>
+  <select id="selectByExample" parameterType="com.xl.ssm.pojo.CustomerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CUSTOMER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CUSTOMER
+    where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CUSTOMER
+    where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xl.ssm.pojo.CustomerExample">
+    delete from CUSTOMER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xl.ssm.pojo.Customer">
+    insert into CUSTOMER (CUSTOMER_ID, COMPANY_NAME, CUSTOMER_LEVEL, 
+      LINKMAN_ID, CUSTOMER_ADDRESS, CUSTOMER_TEL_NO, 
+      CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_WEBSITE, 
+      CUSTOMER_BAN, CUSTOMER_BANK_ACCOUNT, CUSTOMER_SATISFY, 
+      CUSTOMER_CREDIT, CUSTOMER_STATUS, CUSTOMER_TYPE
+      )
+    values (#{customerId,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{customerLevel,jdbcType=DECIMAL}, 
+      #{linkmanId,jdbcType=VARCHAR}, #{customerAddress,jdbcType=VARCHAR}, #{customerTelNo,jdbcType=DECIMAL}, 
+      #{customerFax,jdbcType=DECIMAL}, #{customerEmail,jdbcType=VARCHAR}, #{customerWebsite,jdbcType=VARCHAR}, 
+      #{customerBan,jdbcType=VARCHAR}, #{customerBankAccount,jdbcType=DECIMAL}, #{customerSatisfy,jdbcType=DECIMAL}, 
+      #{customerCredit,jdbcType=DECIMAL}, #{customerStatus,jdbcType=DECIMAL}, #{customerType,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xl.ssm.pojo.Customer">
+    insert into CUSTOMER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="customerId != null">
+        CUSTOMER_ID,
+      </if>
+      <if test="companyName != null">
+        COMPANY_NAME,
+      </if>
+      <if test="customerLevel != null">
+        CUSTOMER_LEVEL,
+      </if>
+      <if test="linkmanId != null">
+        LINKMAN_ID,
+      </if>
+      <if test="customerAddress != null">
+        CUSTOMER_ADDRESS,
+      </if>
+      <if test="customerTelNo != null">
+        CUSTOMER_TEL_NO,
+      </if>
+      <if test="customerFax != null">
+        CUSTOMER_FAX,
+      </if>
+      <if test="customerEmail != null">
+        CUSTOMER_EMAIL,
+      </if>
+      <if test="customerWebsite != null">
+        CUSTOMER_WEBSITE,
+      </if>
+      <if test="customerBan != null">
+        CUSTOMER_BAN,
+      </if>
+      <if test="customerBankAccount != null">
+        CUSTOMER_BANK_ACCOUNT,
+      </if>
+      <if test="customerSatisfy != null">
+        CUSTOMER_SATISFY,
+      </if>
+      <if test="customerCredit != null">
+        CUSTOMER_CREDIT,
+      </if>
+      <if test="customerStatus != null">
+        CUSTOMER_STATUS,
+      </if>
+      <if test="customerType != null">
+        CUSTOMER_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="customerId != null">
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerLevel != null">
+        #{customerLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="linkmanId != null">
+        #{linkmanId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null">
+        #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTelNo != null">
+        #{customerTelNo,jdbcType=DECIMAL},
+      </if>
+      <if test="customerFax != null">
+        #{customerFax,jdbcType=DECIMAL},
+      </if>
+      <if test="customerEmail != null">
+        #{customerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="customerWebsite != null">
+        #{customerWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBan != null">
+        #{customerBan,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBankAccount != null">
+        #{customerBankAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="customerSatisfy != null">
+        #{customerSatisfy,jdbcType=DECIMAL},
+      </if>
+      <if test="customerCredit != null">
+        #{customerCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="customerStatus != null">
+        #{customerStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="customerType != null">
+        #{customerType,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xl.ssm.pojo.CustomerExample" resultType="java.lang.Integer">
+    select count(*) from CUSTOMER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CUSTOMER
+    <set>
+      <if test="record.customerId != null">
+        CUSTOMER_ID = #{record.customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null">
+        COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerLevel != null">
+        CUSTOMER_LEVEL = #{record.customerLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.linkmanId != null">
+        LINKMAN_ID = #{record.linkmanId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerAddress != null">
+        CUSTOMER_ADDRESS = #{record.customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerTelNo != null">
+        CUSTOMER_TEL_NO = #{record.customerTelNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerFax != null">
+        CUSTOMER_FAX = #{record.customerFax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerEmail != null">
+        CUSTOMER_EMAIL = #{record.customerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerWebsite != null">
+        CUSTOMER_WEBSITE = #{record.customerWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBan != null">
+        CUSTOMER_BAN = #{record.customerBan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBankAccount != null">
+        CUSTOMER_BANK_ACCOUNT = #{record.customerBankAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerSatisfy != null">
+        CUSTOMER_SATISFY = #{record.customerSatisfy,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerCredit != null">
+        CUSTOMER_CREDIT = #{record.customerCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerStatus != null">
+        CUSTOMER_STATUS = #{record.customerStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerType != null">
+        CUSTOMER_TYPE = #{record.customerType,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CUSTOMER
+    set CUSTOMER_ID = #{record.customerId,jdbcType=VARCHAR},
+      COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      CUSTOMER_LEVEL = #{record.customerLevel,jdbcType=DECIMAL},
+      LINKMAN_ID = #{record.linkmanId,jdbcType=VARCHAR},
+      CUSTOMER_ADDRESS = #{record.customerAddress,jdbcType=VARCHAR},
+      CUSTOMER_TEL_NO = #{record.customerTelNo,jdbcType=DECIMAL},
+      CUSTOMER_FAX = #{record.customerFax,jdbcType=DECIMAL},
+      CUSTOMER_EMAIL = #{record.customerEmail,jdbcType=VARCHAR},
+      CUSTOMER_WEBSITE = #{record.customerWebsite,jdbcType=VARCHAR},
+      CUSTOMER_BAN = #{record.customerBan,jdbcType=VARCHAR},
+      CUSTOMER_BANK_ACCOUNT = #{record.customerBankAccount,jdbcType=DECIMAL},
+      CUSTOMER_SATISFY = #{record.customerSatisfy,jdbcType=DECIMAL},
+      CUSTOMER_CREDIT = #{record.customerCredit,jdbcType=DECIMAL},
+      CUSTOMER_STATUS = #{record.customerStatus,jdbcType=DECIMAL},
+      CUSTOMER_TYPE = #{record.customerType,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xl.ssm.pojo.Customer">
+    update CUSTOMER
+    <set>
+      <if test="companyName != null">
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerLevel != null">
+        CUSTOMER_LEVEL = #{customerLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="linkmanId != null">
+        LINKMAN_ID = #{linkmanId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null">
+        CUSTOMER_ADDRESS = #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerTelNo != null">
+        CUSTOMER_TEL_NO = #{customerTelNo,jdbcType=DECIMAL},
+      </if>
+      <if test="customerFax != null">
+        CUSTOMER_FAX = #{customerFax,jdbcType=DECIMAL},
+      </if>
+      <if test="customerEmail != null">
+        CUSTOMER_EMAIL = #{customerEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="customerWebsite != null">
+        CUSTOMER_WEBSITE = #{customerWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBan != null">
+        CUSTOMER_BAN = #{customerBan,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBankAccount != null">
+        CUSTOMER_BANK_ACCOUNT = #{customerBankAccount,jdbcType=DECIMAL},
+      </if>
+      <if test="customerSatisfy != null">
+        CUSTOMER_SATISFY = #{customerSatisfy,jdbcType=DECIMAL},
+      </if>
+      <if test="customerCredit != null">
+        CUSTOMER_CREDIT = #{customerCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="customerStatus != null">
+        CUSTOMER_STATUS = #{customerStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="customerType != null">
+        CUSTOMER_TYPE = #{customerType,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xl.ssm.pojo.Customer">
+    update CUSTOMER
+    set COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      CUSTOMER_LEVEL = #{customerLevel,jdbcType=DECIMAL},
+      LINKMAN_ID = #{linkmanId,jdbcType=VARCHAR},
+      CUSTOMER_ADDRESS = #{customerAddress,jdbcType=VARCHAR},
+      CUSTOMER_TEL_NO = #{customerTelNo,jdbcType=DECIMAL},
+      CUSTOMER_FAX = #{customerFax,jdbcType=DECIMAL},
+      CUSTOMER_EMAIL = #{customerEmail,jdbcType=VARCHAR},
+      CUSTOMER_WEBSITE = #{customerWebsite,jdbcType=VARCHAR},
+      CUSTOMER_BAN = #{customerBan,jdbcType=VARCHAR},
+      CUSTOMER_BANK_ACCOUNT = #{customerBankAccount,jdbcType=DECIMAL},
+      CUSTOMER_SATISFY = #{customerSatisfy,jdbcType=DECIMAL},
+      CUSTOMER_CREDIT = #{customerCredit,jdbcType=DECIMAL},
+      CUSTOMER_STATUS = #{customerStatus,jdbcType=DECIMAL},
+      CUSTOMER_TYPE = #{customerType,jdbcType=DECIMAL}
+    where CUSTOMER_ID = #{customerId,jdbcType=VARCHAR}
+  </update>
+</mapper>
